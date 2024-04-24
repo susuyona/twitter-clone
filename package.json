@@ -10,7 +10,7 @@
   },
   "main": "pages/index.tsx",
   "dependencies": {
-    "@prisma/client": "3.15.2",
+    "@prisma/client": "^5.13.0",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
@@ -18,7 +18,6 @@
     "eslint-config-next": "^14.2.3",
     "next": "^14.2.3",
     "postcss": "8.4.14",
-    "prisma": "3.15.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "7.32.2",
@@ -29,5 +28,8 @@
   },
   "license": "ISC",
   "keywords": [],
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "prisma": "^5.13.0"
+  }
 }
