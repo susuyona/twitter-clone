@@ -17,7 +17,7 @@ export default async function Home() {
         <h2>Welcome to Piopio</h2>
       </div>
       <div className="flex flex-col items-center gap-2 w-full">
-        <Link href="/create-account">Sign in</Link>
+        <Link href="/create-account">Join</Link>
         <div className="flex gap-2">
           <span>Already have an account? </span>
           <Link href="/login">Login</Link>

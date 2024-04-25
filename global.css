@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .text-h1 {
+    @apply text-3xl font-semibold;
+  }
+
+  .text-h2 {
+    @apply text-2xl font-semibold;
+  }
+}
+
+@layer components {
+  .primary-btn {
+    @apply w-full bg-blue-500 rounded-md text-white font-medium text-center
+    hover:bg-blue-300 transition-colors;
+  }
+}

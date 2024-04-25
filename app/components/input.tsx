@@ -5,7 +5,7 @@ interface InputProps {
   errors?: string[];
 }
 
-export default function FormInput({
+export default function Input({
   name,
   errors = [],
   ...rest
