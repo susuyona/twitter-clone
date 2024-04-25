@@ -1,6 +1,5 @@
 "use client";
 
-// @ts-ignore
 import { useFormStatus } from "react-dom";
 
 interface ButtonProps {

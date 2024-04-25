@@ -3,7 +3,7 @@
 import Button from "@/app/components/button";
 import Input from "@/app/components/input";
 import { useFormState } from "react-dom";
-import { createAccount } from "./action";
+import { createAccount } from "./actions";
 import { PASSWORD_MIN_LENGTH } from "@/lib/constants";
 
 export default function CreateAccount() {
