@@ -8,8 +8,6 @@ export const metadata = {
   title: "Home",
 };
 
-//check login - logged in? Tweet list
-// if not?
 async function GetIsLoggedIn() {
   const session = await getSession();
   if (session.id) {
@@ -17,6 +15,7 @@ async function GetIsLoggedIn() {
   } else return false;
 }
 
+// how to include author->username
 async function getInitialTweets() {
   const tweets = await db.tweet.findMany({
     select: {

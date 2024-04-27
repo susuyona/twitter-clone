@@ -17,17 +17,19 @@ export default function TweetInList({
   authorId,
 }: TweetProps) {
   return (
-    <Link href={`/tweet/${id}`}>
+    <div>
       <div>
         <span>Author</span>
       </div>
       <div>
-        <span>{text}</span>
+        <Link href={`/tweet/${id}`}>
+          <span>{text}</span>
+        </Link>
         <span>{formatToTimeAgo(createdAt.toString())}</span>
       </div>
       <div>
         <span>Like</span>
       </div>
-    </Link>
+    </div>
   );
 }

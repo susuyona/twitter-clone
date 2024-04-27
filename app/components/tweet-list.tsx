@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { InitialTweets } from "../(home)/page";
 import TweetInList from "./tweet-in-list";
 import { getMoreTweets } from "../(home)/actions";
+import Header from "./header";
 
 interface TweetListProps {
   initialTweets: InitialTweets;
@@ -50,6 +51,7 @@ export default function TweetList({ initialTweets }: TweetListProps) {
   }, [page]);
   return (
     <div>
+      <Header />
       {tweets.map((tweet) => (
         <TweetInList key={tweet.id} {...tweet} />
       ))}
