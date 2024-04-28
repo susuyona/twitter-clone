@@ -8,10 +8,12 @@ export default function TweetInList({
   likes,
   createdAt,
   authorId,
-  author
+  author,
 }: Tweet) {
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center max-w-sm mx-auto 
+      gap-2 mb-5 p-5 rounded-xl border-[1px] border-black"
+    >
       <div>
         <span>{author.username}</span>
       </div>
@@ -19,10 +21,12 @@ export default function TweetInList({
         <Link href={`/tweet/${id}`}>
           <span>{text}</span>
         </Link>
-        <span>{formatToTimeAgo(createdAt.toString())}</span>
       </div>
       <div>
-        <span>How many likes? {likes.length}</span>
+        <span className="text-xs">{formatToTimeAgo(createdAt.toString())}</span>
+      </div>
+      <div className="flex">
+        <span>❤️ {likes.length}</span>
       </div>
     </div>
   );

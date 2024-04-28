@@ -5,7 +5,7 @@ import Button from "@/app/components/button";
 import Header from "@/app/components/header";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getTweet, toggleLike } from "./actions";
+import { getTweet, toggleLike, checkLikedState } from "./actions";
 import TweetInDetail from "@/app/components/tweet-detail";
 import { Tweet } from "@/lib/constants";
 
@@ -34,22 +34,28 @@ export default function TweetDetail({
     fetchTweet();
   }, []);
 
+  const [liked, setLiked] = useState<boolean>(false);
 
-/* 
-  const handleLike = async () => {
-    await toggleLike(tweet!.id);
-  }
   useEffect(() => {
-    handleLike();
-  }, []); */
+    const checkLikedState = () => {
+      const isLiked: boolean = false;
+      setLiked(isLiked);
+    };
+    checkLikedState();
+  }, [tweet]);
+
+  const handleLike = () => {
+    toggleLike(tweet!.id);
+    setLiked(!liked);
+  };
 
   return (
-    <>
+    <div className="flex flex-col justify-center items-center max-w-sm mx-auto gap-5 m-5">
       <Header />
       <Link href="/">
         <Button text="Back to the list" />
       </Link>
-      {tweet && <TweetInDetail {...tweet} />}
-    </>
+      {tweet && <TweetInDetail {...tweet} handleLike={handleLike} likedMessage={liked} />}
+    </div>
   );
 }

@@ -14,14 +14,15 @@ export default function AddTweet() {
     resolver: zodResolver(tweetSchema),
   });
   return (
-    <div>
-      <form action={action} className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center items-center max-w-sm mx-auto gap-5 m-5">
+      <form action={action} className="flex flex-col items-center justify-center">
         <Input
           {...register("text")}
           type="text"
-          placeholder="What do you want to chirp?"
+          placeholder="Say hello!"
           required
           errors={state?.fieldErrors.text}
+          className="p-5 h-20 rounded-xl mb-2"
         />
         <Button text="Upload" />
       </form>

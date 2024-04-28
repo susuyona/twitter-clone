@@ -38,9 +38,8 @@ export async function getUser() {
   }
 }
 
-export async function toggleLike(tweetId: number): Promise<boolean> {
+export async function toggleLike(tweetId: number) {
   const user = await getUser();
-
   const like = await db.like.findFirst({
     where: {
       userId: user!.id,
@@ -54,7 +53,6 @@ export async function toggleLike(tweetId: number): Promise<boolean> {
         id: like.id,
       },
     });
-    return false; // Like was toggled off
   } else {
     await db.like.create({
       data: {
@@ -70,6 +68,18 @@ export async function toggleLike(tweetId: number): Promise<boolean> {
         },
       },
     });
-    return true; // Like was toggled on
   }
+}
+
+export async function checkLikedState(tweetId: number): Promise<boolean> {
+  const user = await getUser();
+
+  const like = await db.like.findFirst({
+    where: {
+      userId: user!.id,
+      tweetId: tweetId,
+    },
+  });
+
+  return !!like;
 }
