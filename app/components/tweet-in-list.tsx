@@ -25,7 +25,7 @@ export default function TweetInList({
       <div>
         <span className="text-xs">{formatToTimeAgo(createdAt.toString())}</span>
       </div>
-      <div className="flex">
+      <div>
         <span>❤️ {likes.length}</span>
       </div>
     </div>

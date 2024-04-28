@@ -29,7 +29,7 @@ export default function TweetInDetail({
         <button
           onChange={handleLike}
           className="bg-orange-200 rounded-md text-black font-medium text-center
-    hover:bg-orange-400 transition-colors px-2 py-1"
+        hover:bg-orange-400 transition-colors px-2 py-1"
         >
           {likedMessage ? "💔" : "💖"}
         </button>

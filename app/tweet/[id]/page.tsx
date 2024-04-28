@@ -9,11 +9,7 @@ import { getTweet, toggleLike, checkLikedState } from "./actions";
 import TweetInDetail from "@/app/components/tweet-detail";
 import { Tweet } from "@/lib/constants";
 
-export default function TweetDetail({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function TweetDetail({ params }: { params: { id: string } }) {
   const id = Number(params.id);
   const [tweet, setTweet] = useState<Tweet | null>(null);
 
@@ -37,11 +33,12 @@ export default function TweetDetail({
   const [liked, setLiked] = useState<boolean>(false);
 
   useEffect(() => {
-    const checkLikedState = () => {
-      const isLiked: boolean = false;
-      setLiked(isLiked);
-    };
-    checkLikedState();
+    const fetchLike = () => {
+      checkLikedState(id).then((isLiked) => {
+        setLiked(isLiked);
+      });
+    }
+    fetchLike();
   }, [tweet]);
 
   const handleLike = () => {
@@ -55,7 +52,13 @@ export default function TweetDetail({
       <Link href="/">
         <Button text="Back to the list" />
       </Link>
-      {tweet && <TweetInDetail {...tweet} handleLike={handleLike} likedMessage={liked} />}
+      {tweet && (
+        <TweetInDetail
+          {...tweet}
+          handleLike={handleLike}
+          likedMessage={liked}
+        />
+      )}
     </div>
   );
 }
