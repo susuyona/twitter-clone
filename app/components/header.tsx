@@ -3,7 +3,6 @@ import Link from "next/link";
 import Button from "./button";
 
 export default function Header() {
-
   return (
     <div className="flex flex-row justify-between">
       <h1>

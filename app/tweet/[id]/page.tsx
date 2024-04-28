@@ -1,3 +1,4 @@
+import Button from "@/app/components/button";
 import Header from "@/app/components/header";
 import db from "@/lib/db";
 import { formatToTimeAgo } from "@/lib/utils";
@@ -36,7 +37,7 @@ export default async function TweetDetail({
   return (
     <>
       <Header />
-      <button><Link href="/">Back</Link></button>
+      <Link href="/"><Button text="Back to the list" /></Link>
       <div>
         <div>
           <h3>{tweet.author.username}</h3>

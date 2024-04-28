@@ -2,6 +2,9 @@ import db from "@/lib/db";
 import getSession from "@/lib/session";
 import Welcome from "../components/welcome";
 import TweetList from "../components/tweet-list";
+import Header from "../components/header";
+import Button from "../components/button";
+import Link from "next/link";
 
 export const metadata = {
   title: "Home",
@@ -25,8 +28,8 @@ async function getInitialTweets() {
       author: {
         select: {
           username: true,
-        }
-      }
+        },
+      },
     },
     take: 5,
     orderBy: {
@@ -41,7 +44,15 @@ export default async function Home() {
   const isLoggedIn = await GetIsLoggedIn();
   return (
     <>
-      {isLoggedIn ? <TweetList initialTweets={initialTweets} /> : <Welcome />}
+      {isLoggedIn ? (
+        <>
+          <Header />
+          <Link href="/tweet/add"><Button text="Go to write a tweet" /></Link>
+          <TweetList initialTweets={initialTweets} />
+        </>
+      ) : (
+        <Welcome />
+      )}
     </>
   );
 }
