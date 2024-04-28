@@ -13,3 +13,5 @@ export interface Tweet {
   authorId: number;
   author: { username: string };
 }
+
+export const TWEET_MAX_LENGTH = 200

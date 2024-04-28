@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import TweetInput from "./tweet-input";
 import TweetInList from "./tweet-in-list";
 import { getMoreTweets } from "../(home)/actions";
 import Header from "./header";
@@ -9,8 +10,6 @@ import { Tweet } from "@/lib/constants";
 interface TweetListProps {
   initialTweets: Tweet[];
 }
-
-// write tweet
 
 export default function TweetList({ initialTweets }: TweetListProps) {
   const [tweets, setTweets] = useState<Tweet[]>(initialTweets);
@@ -58,6 +57,7 @@ export default function TweetList({ initialTweets }: TweetListProps) {
   return (
     <div>
       <Header />
+      <TweetInput />
       {tweets.map((tweet) => (
         <TweetInList key={tweet.id} {...tweet} />
       ))}
