@@ -1,19 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { InitialTweets } from "../(home)/page";
 import TweetInList from "./tweet-in-list";
 import { getMoreTweets } from "../(home)/actions";
 import Header from "./header";
+import { Tweet } from "@/lib/constants";
 
 interface TweetListProps {
-  initialTweets: InitialTweets;
+  initialTweets: Tweet[];
 }
 
 // write tweet
 
 export default function TweetList({ initialTweets }: TweetListProps) {
-  const [tweets, setTweets] = useState(initialTweets);
+  const [tweets, setTweets] = useState<Tweet[]>(initialTweets);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [isLastPage, setIsLastPage] = useState(false);
@@ -31,7 +31,13 @@ export default function TweetList({ initialTweets }: TweetListProps) {
           const nextTweets = await getMoreTweets(page + 1);
           if (nextTweets.length !== 0) {
             setPage((prev) => prev + 1);
-            setTweets((prev) => [...prev, ...nextTweets]);
+            setTweets((prev) => [
+              ...prev,
+              ...nextTweets.map((tweet) => ({
+                ...tweet,
+                author: { username: tweet.author.username },
+              })),
+            ]);
           } else {
             setIsLastPage(true);
           }

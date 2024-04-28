@@ -10,6 +10,11 @@ export async function getMoreTweets(page: number) {
       createdAt: true,
       authorId: true,
       id: true,
+      author: {
+        select: {
+          username: true,
+        }
+      }
     },
     skip: page * 1,
     take: 1,

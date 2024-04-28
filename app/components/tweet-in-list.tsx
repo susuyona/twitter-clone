@@ -1,13 +1,6 @@
 import { formatToTimeAgo } from "@/lib/utils";
 import Link from "next/link";
-
-interface TweetProps {
-  id: number;
-  text: string;
-  likes: object[];
-  createdAt: Date;
-  authorId: number;
-}
+import { Tweet } from "@/lib/constants";
 
 export default function TweetInList({
   id,
@@ -15,11 +8,12 @@ export default function TweetInList({
   likes,
   createdAt,
   authorId,
-}: TweetProps) {
+  author
+}: Tweet) {
   return (
     <div>
       <div>
-        <span>Author</span>
+        <span>{author.username}</span>
       </div>
       <div>
         <Link href={`/tweet/${id}`}>

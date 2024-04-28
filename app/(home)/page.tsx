@@ -1,6 +1,5 @@
 import db from "@/lib/db";
 import getSession from "@/lib/session";
-import { Prisma } from "@prisma/client";
 import Welcome from "../components/welcome";
 import TweetList from "../components/tweet-list";
 
@@ -15,7 +14,6 @@ async function GetIsLoggedIn() {
   } else return false;
 }
 
-// how to include author->username
 async function getInitialTweets() {
   const tweets = await db.tweet.findMany({
     select: {
@@ -24,6 +22,11 @@ async function getInitialTweets() {
       createdAt: true,
       authorId: true,
       id: true,
+      author: {
+        select: {
+          username: true,
+        }
+      }
     },
     take: 5,
     orderBy: {
@@ -32,7 +35,6 @@ async function getInitialTweets() {
   });
   return tweets;
 }
-export type InitialTweets = Prisma.PromiseReturnType<typeof getInitialTweets>;
 
 export default async function Home() {
   const initialTweets = await getInitialTweets();

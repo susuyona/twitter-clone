@@ -4,3 +4,12 @@ export const PASSWORD_REGEX = new RegExp(
 );
 export const PASSWORD_REGEX_ERROR =
   "Password must contain at least one UPPER- and lowercase letter, a number and special characters like #?!@$%^&*-";
+
+export interface Tweet {
+  id: number;
+  text: string;
+  likes: object[];
+  createdAt: Date;
+  authorId: number;
+  author: { username: string };
+}
