@@ -1,7 +1,28 @@
 "use server";
 
-import db from '@/lib/db';
+import db from "@/lib/db";
 import getSession from "@/lib/session";
+
+export async function getTweet(id: number) {
+  const tweet = await db.tweet.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      author: {
+        select: {
+          username: true,
+        },
+      },
+      likes: {
+        select: {
+          userId: true,
+        },
+      },
+    },
+  });
+  return tweet;
+}
 
 export async function getUser() {
   const session = await getSession();
@@ -17,36 +38,38 @@ export async function getUser() {
   }
 }
 
-export async function toggleLike(tweetId: number) {
-    const user = await getUser();
+export async function toggleLike(tweetId: number): Promise<boolean> {
+  const user = await getUser();
 
-    const like = await db.like.findFirst({
+  const like = await db.like.findFirst({
+    where: {
+      userId: user!.id,
+      tweetId: tweetId,
+    },
+  });
+
+  if (like) {
+    await db.like.delete({
       where: {
-        userId: user!.id,
-        tweetId: tweetId,
+        id: like.id,
       },
     });
-
-    if (like) {
-      await db.like.delete({
-        where: {
-          id: like.id,
-        },
-      });
-    } else {
-      await db.like.create({
-        data: {
-          user: {
-            connect: {
-              id: user!.id,
-            },
-          },
-          tweet: {
-            connect: {
-              id: tweetId,
-            },
+    return false; // Like was toggled off
+  } else {
+    await db.like.create({
+      data: {
+        user: {
+          connect: {
+            id: user!.id,
           },
         },
-      });
-    }
+        tweet: {
+          connect: {
+            id: tweetId,
+          },
+        },
+      },
+    });
+    return true; // Like was toggled on
+  }
 }
