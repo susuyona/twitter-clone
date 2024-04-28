@@ -22,7 +22,7 @@ export default function TweetInList({
         <span>{formatToTimeAgo(createdAt.toString())}</span>
       </div>
       <div>
-        <span>Like</span>
+        <span>How many likes? {likes.length}</span>
       </div>
     </div>
   );

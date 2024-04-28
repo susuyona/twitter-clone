@@ -1,9 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import Button from "@/app/components/button";
 import Header from "@/app/components/header";
 import db from "@/lib/db";
 import { formatToTimeAgo } from "@/lib/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getUser, toggleLike } from "./actions";
 
 async function getTweet(id: number) {
   const tweet = await db.tweet.findUnique({
@@ -14,6 +18,11 @@ async function getTweet(id: number) {
       author: {
         select: {
           username: true,
+        },
+      },
+      likes: {
+        select: {
+          userId: true,
         },
       },
     },
@@ -34,10 +43,22 @@ export default async function TweetDetail({
   if (!tweet) {
     return notFound();
   }
+  const user = await getUser();
+  const [isLiked, setIsLiked] = useState(
+    tweet.likes.some((like) => like.userId === user!.id)
+  );
+
+  const handleLikeButtonClick = async () => {
+    await toggleLike(tweet.id);
+    setIsLiked(!isLiked);
+  };
+
   return (
     <>
       <Header />
-      <Link href="/"><Button text="Back to the list" /></Link>
+      <Link href="/">
+        <Button text="Back to the list" />
+      </Link>
       <div>
         <div>
           <h3>{tweet.author.username}</h3>
@@ -49,7 +70,10 @@ export default async function TweetDetail({
           <span>{formatToTimeAgo(tweet.createdAt.toString())}</span>
         </div>
         <div>
-          <span>Like</span>
+          <span>How many? {tweet.likes.length}</span>
+          <button onClick={handleLikeButtonClick}>
+            {isLiked ? "Unlike" : "Like"}
+          </button>
         </div>
       </div>
     </>
