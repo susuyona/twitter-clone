@@ -2,6 +2,16 @@
 
 import db from "@/lib/db";
 import getSession from "@/lib/session";
+import assert from "assert";
+
+async function getFirstLikeById(tweetId: number, userId: number) {
+  return await db.like.findFirst({
+    where: {
+      userId,
+      tweetId,
+    },
+  });
+}
 
 export async function getTweet(id: number) {
   const tweet = await db.tweet.findUnique({
@@ -21,39 +31,37 @@ export async function getTweet(id: number) {
       },
     },
   });
+  assert(tweet, "Tweet not found");
   return tweet;
 }
 
 export async function getUser() {
   const session = await getSession();
-  if (session.id) {
-    const user = await db.user.findUnique({
-      where: {
-        id: session.id,
-      },
-    });
-    if (user) {
-      return user;
-    }
-  }
+
+  const user = await db.user.findUnique({
+    where: {
+      id: session.id,
+    },
+  });
+  assert(user, "User not found");
+  return user;
 }
 
 export async function toggleLike(tweetId: number) {
   const user = await getUser();
-  const like = await db.like.findFirst({
-    where: {
-      userId: user!.id,
-      tweetId: tweetId,
-    },
-  });
 
-  if (like) {
+  try {
+    const like = await getFirstLikeById(tweetId, user.id);
+
+    assert(like, "Like not found");
+
     await db.like.delete({
       where: {
         id: like.id,
       },
     });
-  } else {
+    return false;
+  } catch (error) {
     await db.like.create({
       data: {
         user: {
@@ -68,18 +76,14 @@ export async function toggleLike(tweetId: number) {
         },
       },
     });
+    return true;
   }
 }
 
 export async function checkLikedState(tweetId: number): Promise<boolean> {
   const user = await getUser();
 
-  const like = await db.like.findFirst({
-    where: {
-      userId: user!.id,
-      tweetId: tweetId,
-    },
-  });
+  const like = await getFirstLikeById(tweetId, user.id);
 
-  return !!like;
+  return like ? true : false;
 }
