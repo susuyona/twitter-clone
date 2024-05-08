@@ -24,7 +24,7 @@ export default function AddTweet() {
           errors={state?.fieldErrors.text}
           className="p-5 h-20 rounded-xl mb-2"
         />
-        <Button text="Upload" />
+        <Button text="Post" />
       </form>
     </div>
   )

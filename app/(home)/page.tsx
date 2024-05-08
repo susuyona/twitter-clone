@@ -47,7 +47,7 @@ export default async function Home() {
       {isLoggedIn ? (
         <div className="flex flex-col justify-center items-center max-w-sm mx-auto gap-5 m-5">
           <Header />
-          <Link href="/tweet/add"><Button text="Go to write a tweet" /></Link>
+          <Link href="/tweet/add"><Button text="Write a tweet" /></Link>
           <TweetList initialTweets={initialTweets} />
         </div>
       ) : (
